@@ -1,65 +1,189 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    
 
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            position: relative;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            display: block;
+            transition: 0.3s;
+        }
+        nav ul li a:hover {
+            background: #007BFF;
+            border-radius: 5px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            list-style: none;
+            padding: 5px 0;
+            min-width: 150px;
+            text-align: left;
+        }
+        .dropdown-menu li a {
+            color: black;
+            padding: 8px 12px;
+            display: block;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .hero {
+            background: url('hero-bg.jpg') center/cover no-repeat;
+            color: white;
+            padding: 100px 20px;
+            margin-top: 60px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .hero h1 {
+            font-size: 36px;
+        }
+        .hero p {
+            font-size: 18px;
+        }
+        .hero button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .hero button:hover {
+            background: #0056b3;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 40px 20px;
+            animation: slideUp 1.5s ease-in-out;
+        }
+        .feature {
+            width: 250px;
+            background: #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background: #222;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+        }
+ </style>
+    
+</head>
 
-data = pd.read_csv('student-mat.csv')
-
-data.head()
-missing_values = data.isnull().sum()
-
-data_types = data.dtypes
-
-data_shape = data.shape
-
-data.fillna(data.median(numeric_only=True), inplace=True)
-
-data.drop_duplicates(inplace=True)
-
-# 1. Average score in math (G3)
-avg_score = data['G3'].mean()
-
-# 2. Count of students scoring above 15 in final grade (G3)
-high_scorers = data[data['G3'] > 15].shape[0]
-
-# 3. Correlation between study time and final grade
-correlation = data['studytime'].corr(data['G3'])
-
-# 4. Average final grade by gender
-avg_grade_gender = data.groupby('sex')['G3'].mean()
-
-# Step 5: Data Visualization
-# Histogram of final grades
-plt.figure(figsize=(8, 5))
-plt.hist(data['G3'], bins=10, color='skyblue', edgecolor='black')
-plt.title('Distribution of Final Grades (G3)')
-plt.xlabel('Final Grade (G3)')
-plt.ylabel('Frequency')
-plt.show()
-
-# Scatter plot between study time and final grade
-plt.figure(figsize=(8, 5))
-sns.scatterplot(x='studytime', y='G3', data=data, color='green')
-plt.title('Study Time vs Final Grade')
-plt.xlabel('Study Time (hours per week)')
-plt.ylabel('Final Grade (G3)')
-plt.show()
-
-# Bar chart comparing average scores by gender
-plt.figure(figsize=(6, 4))
-avg_grade_gender.plot(kind='bar', color=['lightcoral', 'lightblue'])
-plt.title('Average Final Grade by Gender')
-plt.xlabel('Gender')
-plt.ylabel('Average Final Grade (G3)')
-plt.xticks(rotation=0)
-plt.show()
-
-# Summary of findings
-print("Missing Values:\n", missing_values)
-print("\nData Types:\n", data_types)
-print("\nDataset Size:", data_shape)
-print("\nAverage Final Grade (G3):", avg_score)
-print("\nNumber of Students Scoring Above 15 in G3:", high_scorers)
-print("\nCorrelation between Study Time and Final Grade:", correlation)
-print("\nAverage Final Grade by Gender:\n", avg_grade_gender)
+<body>
+    <header>
+        <div class="logo">MyWebsite</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Features</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Feature 1</a></li>
+                        <li><a href="#">Feature 2</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Service 1</a></li>
+                        <li><a href="#">Service 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>Welcome to MyWebsite</h1>
+        <p>Providing the best solutions for your needs.</p>
+        <button>Get Started</button>
+    </section>
+    <section class="features">
+        <div class="feature">
+            <h2>Feature 1</h2>
+            <p>Brief details about feature 1.</p>
+        </div>
+        <div class="feature">
+            <h2>Feature 2</h2>
+            <p>Brief details about feature 2.</p>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2025 MyWebsite | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+</body>
+</html>
